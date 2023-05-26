@@ -1,0 +1,41 @@
+package com.grupozeta.sm;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.view.MenuItem;
+
+import com.grupozeta.sm.includes.Toolbar;
+
+public class HomeLecturasFinalizar extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home_lecturas_finalizar);
+        Toolbar.show(this, true);
+    }
+
+
+
+
+
+    @SuppressLint("RtlHardcoded")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            backPress();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void onBackPressed() {
+        backPress();
+    }
+
+    private void backPress() {
+        finish();
+    }
+    //BACK PRESS
+}

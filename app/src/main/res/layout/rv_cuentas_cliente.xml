@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="6dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+        <LinearLayout
+            android:id="@+id/llLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:foregroundGravity="center"
+                android:src="@drawable/interior"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center" />
+            <TextView
+                android:id="@+id/tvFecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:text=""
+                android:textSize="9sp"
+                android:visibility="visible"
+                android:gravity="center"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="0dp"
+            android:layout_toEndOf="@id/llLogo"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tvCuenta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:text="Cuenta Cliente#"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tvNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre: "
+                android:textSize="14sp"
+                android:singleLine="true"
+                android:ellipsize = "end"/>
+
+            <TextView
+                android:id="@+id/tvCalle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Calle: "
+                android:textSize="14sp"
+                android:singleLine="true"
+                android:ellipsize = "end"/>
+            <TextView
+                android:id="@+id/tvInteriores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Interiores: "
+                android:textSize="14sp"
+                android:singleLine="true"
+                android:ellipsize = "end"/>
+            <TextView
+                android:id="@+id/tvLectura"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lectura Ant: "
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:id="@+id/llLecturaNueva"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lectura Nue: "
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/tvLecturaNueva"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/grisDefault" />
+</LinearLayout>
+
+
+

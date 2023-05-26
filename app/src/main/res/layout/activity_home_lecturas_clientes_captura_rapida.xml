@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeLecturasClientesCapturaRapida">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/llDatosCliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        android:layout_margin="15dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/datos_del_cliente"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <LinearLayout
+            android:id="@+id/llLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center">
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:foregroundGravity="center"
+                android:src="@drawable/interior"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center" />
+            <TextView
+                android:id="@+id/tvFecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:text=""
+                android:textSize="9sp"
+                android:visibility="visible"
+                android:gravity="center"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cuenta"
+            android:textColor="@color/Gris4"
+            android:textSize="14sp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/tvCuenta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cuenta"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"/>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/grisDefault" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nombre"
+            android:textColor="@color/Gris4"
+            android:textSize="14sp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/tvNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginStart="10dp"
+            />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/grisDefault" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/domicilio"
+            android:textColor="@color/Gris4"
+            android:textSize="14sp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/tvDomicilio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/domicilio"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginStart="10dp"
+            />
+
+
+        <TextView
+            android:id="@+id/tvInteriores"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/domicilio"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginStart="10dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/grisDefault" />
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lecturas"
+            android:textColor="@color/Gris4"
+            android:textSize="14sp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/tvLecturaAntigua"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lectura"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"/>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etLecturaNueva"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:fontFamily="@font/open_sans"
+                android:hint="Ingresa lectura nueva."
+                android:layout_gravity="center"
+                android:inputType="number"
+                android:maxLength="6"
+                android:textColorHint="@color/grisDefault"
+                android:shadowColor="@color/black"
+                android:textSize="14sp"
+                android:gravity="center"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSiguiente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_azul"
+            android:fontFamily="@font/open_sans_semibold"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/siguiente"
+            android:textAllCaps="false"
+            android:textColor="#FFF"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp" />
+    </LinearLayout>
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/success"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="complete.json"
+        app:lottie_imageAssetsFolder="assets"
+        app:lottie_loop="false"
+        android:visibility="gone"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,40 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.ServicioMedido" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- STATUS BAR. -->
+        <item name="android:statusBarColor">@color/colorLogo</item>
+        <item name="android:navigationBarColor">@color/colorLogo</item>
+
+        <!-- TOOLBAR -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textColorSecondary">@color/white</item> <!-- ICONO -->
+    </style>
+
+    <style name="Theme.ServicioMedido" parent="Base.Theme.ServicioMedido" />
+
+
+    <style name="Theme.Design.BottomSheetDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/Animation.Design.BottomSheetDialog</item>
+        <item name="bottomSheetStyle">@style/Widget.Design.BottomSheet.Modal</item>
+    </style>
+
+    <style name="Theme.ServicioMedido.Loading" parent="Base.Theme.ServicioMedido">
+        <item name="android:windowBackground">@drawable/loading_screen</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:navigationBarColor">@color/white</item>
+    </style>
+
+
+    <style name="AppTheme.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <!-- línea inferior -->
+        <item name="boxStrokeColor">@color/primaryDarkColor</item>
+        <!-- el color de relleno, (por defecto es colorOnSurface)-->
+        <item name="boxBackgroundColor">@android:color/transparent</item>
+        <!-- el hint cuando el campo está vacio y sin foco-->
+        <item name="android:textColorHint">@color/primaryDarkColor</item>
+        <!-- el hint cuando se convierte en etiqueta flotante-->
+        <item name="hintTextColor">@color/primaryDarkColor</item>
+    </style>
+</resources>

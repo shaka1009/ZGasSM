@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Login">
+
+
+    <LinearLayout
+        android:id="@+id/llEmpecemos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/logo" />
+
+
+        <TextView
+            android:id="@+id/descLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:paddingBottom="20dp"
+            android:text="@string/descLogin"
+            android:textAlignment="textStart"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/llTelefono"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llEmpecemos"
+        android:layout_alignStart="@+id/llEmpecemos"
+        android:layout_alignEnd="@+id/llEmpecemos"
+        android:layout_marginEnd="0dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:fontFamily="@font/open_sans_light"
+            android:paddingBottom="1dp"
+            android:text="@string/descUsuario"
+            android:textColor="@color/colorAccent" />
+
+        <RelativeLayout
+            android:id="@+id/rlTelefono"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etUsuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:hint="Ingresa tu usuario."
+                    android:inputType="text"
+                    android:digits = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    android:maxLength="20"
+                    android:shadowColor="@color/black"
+                    android:textSize="18sp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/llPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_light"
+                android:text="@string/password"
+                android:textColor="@color/colorAccent"
+                android:paddingBottom="1dp"
+                android:layout_marginTop="17dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="password_toggle">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etPassword"
+                    android:textSize="18sp"
+                    android:shadowColor="@color/black"
+                    android:fontFamily="@font/open_sans"
+                    android:inputType="textPassword"
+                    android:hint="Ingresa contraseña."
+                    android:maxLength="20"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/terms"
+        android:layout_alignStart="@+id/terms"
+        android:layout_alignEnd="@+id/terms"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/btn_azul"
+        android:fontFamily="@font/open_sans_semibold"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="@string/loginBtnText"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:visibility="visible" />
+
+    <ProgressBar
+        android:id="@+id/pbLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/btnLogin"
+        android:layout_alignTop="@+id/btnLogin"
+        android:layout_alignEnd="@+id/btnLogin"
+        android:layout_alignBottom="@+id/btnLogin"
+        android:backgroundTint="@color/colorAltPrimary"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/colorAltPrimary"
+        android:progress="100"
+        android:progressTint="@color/colorAltPrimary"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
+
+
+    <TextView
+        android:id="@+id/terms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text=" "
+        android:textAlignment="center"
+        android:textSize="0sp"
+        android:textColor="@color/colorAccent"
+        android:fontFamily="@font/open_sans"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="0dp"/>
+
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/snackbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</RelativeLayout>

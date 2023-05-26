@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">Servicio Medido</string>
+    <string name="version">1.0.0</string>
+
+    <!--Login-->
+    <string name="getStarted">Empecemos</string>
+    <string name="descLogin">Ingresa tu usuario y contraseña, para acceder a la aplicación de Servicio Medido.</string>
+    <string name="descUsuario">Usuario.</string>
+    <string name="input_numero">Ingresa número de celular.</string>
+    <string name="loginBtnText">Ingresar</string>
+    <string name="password">Contraseña</string>
+    <!--FinLogin-->
+
+    <string name="acept">Aceptar</string>
+    <string name="reenviar">Reenviar</string>
+    <string name="verificar">Verificar</string>
+
+    <!--Home-->
+    <string name="perfil">Perfil</string>
+    <string name="acerca_de_app">Acerca de la App.</string>
+    <string name="desarrolladores">Jesús E. Magallanes.</string>
+    <string name="cerrar_sesion">Cerrar sesión</string>
+    <!--FinHome-->
+
+    <string name="confirmar_cierre_de_sesion">Confirmar Cierre de Sesión</string>
+    <string name="salir">Salir</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="welcome">Bienvenido</string>
+    <string name="finalizar_captura">Finalizar Captura</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="lectura_nueva">Lectura nueva.</string>
+    <string name="registrar_lectura_nueva">Registrar lectura nueva</string>
+    <string name="domicilio">Domicilio</string>
+    <string name="cuenta">Cuenta</string>
+    <string name="datos_del_cliente">Datos del Cliente</string>
+    <string name="nombre">Nombre</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="lecturas">Lecturas</string>
+    <string name="advertencia">Advertencia</string>
+    <string name="finalizar">Finalizar</string>
+</resources>
