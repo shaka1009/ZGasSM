@@ -31,7 +31,9 @@ import com.grupozeta.sm.includes.PopupError;
 import com.grupozeta.sm.includes.SnackbarError;
 import com.grupozeta.sm.includes.Toolbar;
 import com.grupozeta.sm.models.Calle;
+import com.grupozeta.sm.models.CuentaCliente;
 import com.grupozeta.sm.models.CuentaTanque;
+import com.grupozeta.sm.models.Tanque;
 import com.grupozeta.sm.models.Usuario;
 
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
@@ -58,10 +60,12 @@ public class HomeLecturas extends AppCompatActivity {
     TextView tvDomicilio;
     TextView tvInteriores;
     TextView tvDescripcion;
-
+    TextView tvCantidad;
+    TextView tvFecha;
     RecyclerView rvCuentasTanque;
-
     CuentaTanqueListAdapter cuentaTanqueListAdapter;
+    ArrayList mTanques;
+    CardView cvPorcentajeTanque;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,23 +84,21 @@ public class HomeLecturas extends AppCompatActivity {
         btnSendPress = false;
         mPopupError = new PopupError(this, getApplicationContext(), findViewById(R.id.popupError));
         pbLogin = findViewById(R.id.pbLogin);
-
         snackbar = findViewById(R.id.snackbar_layout);
         snackbarError = new SnackbarError(snackbar, this);
-
         mQueue = Volley.newRequestQueue(this);
-
         cvCuentaTanque = findViewById(R.id.cvCuentaTanque);
-
         tvCuenta = findViewById(R.id.tvCuenta);
         tvDomicilio = findViewById(R.id.tvDomicilio);
         tvInteriores = findViewById(R.id.tvInteriores);
         tvDescripcion = findViewById(R.id.tvDescripcion);
-
+        tvCantidad = findViewById(R.id.tvCantidad);
+        tvFecha = findViewById(R.id.tvFecha);
         rvCuentasTanque = findViewById(R.id.rvCuentasTanque);
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvCuentasTanque.setLayoutManager(linearLayoutManager);
+        mTanques = new ArrayList<Tanque>();
+        cvPorcentajeTanque = findViewById(R.id.cvPorcentajeTanque);
     }
     private void escuchadores() {
         btnBuscar.setOnClickListener(new View.OnClickListener() {
@@ -176,6 +178,16 @@ public class HomeLecturas extends AppCompatActivity {
                                 mCuentaTanque.addCalle(mCalle);
                             }
 
+
+                            JSONArray arr1 = response.getJSONArray("mTanques");
+
+                            for (int x = 0; x < arr1.length(); x++) {
+                                JSONObject object1 = arr1.getJSONObject(x);
+                                System.out.println("DEPURACION" + object1.getString("id_tanque"));
+                                Tanque mTanque = new Tanque(object1.getString("id_tanque"), object1.getString("descripcion"), object1.getString("capacidad"), object1.getString("numero_sap"), object1.getString("porcentaje_actual"));
+                               mTanques.add(mTanque);
+                            }
+
 /*
 
     TOMAR SOLO 1 VALOR
@@ -204,7 +216,8 @@ public class HomeLecturas extends AppCompatActivity {
 
                         } catch (JSONException e) {
                             runOnUiThread(() -> {
-                                snackbarError.show("No hay conexión con el servidor." + e);
+                                snackbarError.show("No hay conexión con el servidor.");
+                                System.out.println("DEPURACION" + e);
                                 btnSendPress = false;
                                 runOnUiThread(() -> loadingVisible(false));
                             });
@@ -234,6 +247,9 @@ public class HomeLecturas extends AppCompatActivity {
             tvInteriores.setText(mCuentaTanque.getNombre_colonia() + ", CP: " + mCuentaTanque.getCodigo_postal() );
             tvDescripcion.setText(mCuentaTanque.getDescripcion());
             mostrarCV(true);
+
+            tvFecha.setText("");
+            tvCantidad.setText("Cantidad: " + Integer.toString(mTanques.size()));
         });
 
         cuentaTanqueListAdapter = new CuentaTanqueListAdapter(mCuentaTanque.getCalles(), HomeLecturas.this, mCuentaTanque.getCuenta());
@@ -284,11 +300,13 @@ public class HomeLecturas extends AppCompatActivity {
     {
         if(b)
         {
+            cvPorcentajeTanque.setVisibility(View.VISIBLE);
             cvCuentaTanque.setVisibility(View.VISIBLE);
             rvCuentasTanque.setVisibility(View.VISIBLE);
         }
 
         else {
+            cvPorcentajeTanque.setVisibility(View.GONE);
             cvCuentaTanque.setVisibility(View.GONE);
             rvCuentasTanque.setVisibility(View.GONE);
         }
