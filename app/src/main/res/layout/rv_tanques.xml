@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="6dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:foregroundGravity="center"
+            android:src="@drawable/tanque"/>
+        <LinearLayout
+            android:id="@+id/linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="0dp"
+            android:layout_toRightOf="@id/ivLogo"
+            android:layout_toEndOf="@id/ivLogo"
+            android:layout_toStartOf="@+id/llAlertas"
+            android:orientation="vertical"
+            android:layout_marginLeft="4dp">
+            <TextView
+                android:id="@+id/tvDescripcion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:text="Cuenta #"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tvCapacidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Calle: "
+                android:textSize="14sp"
+                android:layout_alignEnd="@+id/llAlertas"
+                android:singleLine="true"
+                android:ellipsize = "end"/>
+            <TextView
+                android:id="@+id/tvPorcentajeActual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cantidad: "
+                android:textSize="14sp" />
+
+
+
+            <LinearLayout
+                android:id="@+id/llPorcentajeNuevo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/porcentaje_nuevo"
+                    android:textSize="14sp"/>
+                <TextView
+                    android:id="@+id/tvPorcentajeNuevo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/llAlertas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
+            android:gravity="center">
+
+
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/grisDefault" />
+</LinearLayout>
+
+
+

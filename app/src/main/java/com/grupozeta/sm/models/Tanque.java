@@ -1,18 +1,23 @@
 package com.grupozeta.sm.models;
 
-public class Tanque {
+import java.io.Serializable;
+
+public class Tanque implements Serializable {
 	int id_tanque;
 	String descripcion;
 	int capacidad;
 	int numero_sap;
 	
 	int porcentaje_actual;
+	int porcentaje_nuevo;
 	
 	public Tanque() {
 		this.id_tanque = -1;
 		this.descripcion = "";
 		this.capacidad = -1;
 		this.numero_sap = -1;
+		porcentaje_actual = -1;
+		porcentaje_nuevo = -1;
 	}
 	
 
@@ -22,6 +27,8 @@ public class Tanque {
 		this.descripcion = descripcion;
 		this.capacidad = Integer.parseInt(capacidad);
 		this.numero_sap = Integer.parseInt(numero_sap);
+		porcentaje_actual = -1;
+		porcentaje_nuevo = -1;
 	}
 
 	public Tanque(String id_tanque, String descripcion, String capacidad, String numero_sap, String porcentaje) {
@@ -30,8 +37,15 @@ public class Tanque {
 		this.capacidad = Integer.parseInt(capacidad);
 		this.numero_sap = Integer.parseInt(numero_sap);
 		this.porcentaje_actual = Integer.parseInt(porcentaje);
+		this.porcentaje_nuevo = -1;
 	}
 
+	public int getPorcentaje_nuevo() {
+		return porcentaje_nuevo;
+	}
+	public void setPorcentaje_nuevo(int porcentaje_nuevo) {
+		this.porcentaje_nuevo = porcentaje_nuevo;
+	}
 	public int getPorcentaje_actual() {
 		return porcentaje_actual;
 	}

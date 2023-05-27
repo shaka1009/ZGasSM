@@ -1,5 +1,7 @@
 package com.grupozeta.sm;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -7,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -42,6 +45,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,13 +70,14 @@ public class HomeLecturas extends AppCompatActivity {
     CuentaTanqueListAdapter cuentaTanqueListAdapter;
     ArrayList mTanques;
     CardView cvPorcentajeTanque;
+    CuentaTanque mCuentaTanques;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_lecturas);
 
-        Toolbar.show(this, true, "");
+        Toolbar.show(this, true);
 
         inicializar();
         escuchadores();
@@ -149,7 +154,34 @@ public class HomeLecturas extends AppCompatActivity {
 
             }
         });
+
+        cvPorcentajeTanque.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeLecturas.this, HomeLecturasTanques.class);
+
+                Bundle args = new Bundle();
+                args.putSerializable("ARRAYLIST",(Serializable)mTanques);
+                intent.putExtra("BUNDLE",args);
+                intent.putExtra("idCuentaTanque", Integer.toString(mCuentaTanques.getId_cuenta()));
+                ActivityResultLauncher.launch(intent);
+            }
+        });
     }
+
+    androidx.activity.result.ActivityResultLauncher<Intent> ActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent intent = result.getData();
+                    Bundle args = intent.getBundleExtra("BUNDLE");
+                    /*
+                    mCuentasCliente = (ArrayList<CuentaCliente>) args.getSerializable("ARRAYLIST");
+                    imprimirDatos();
+                    cuentaClienteListAdapter.updateData();
+                    recarga_datos();*/
+                }
+            });
 
     private void webServiceCuentaTanque(String cuentaTanque)
     {
@@ -178,8 +210,10 @@ public class HomeLecturas extends AppCompatActivity {
                                 mCuentaTanque.addCalle(mCalle);
                             }
 
-
+                            mCuentaTanques = mCuentaTanque;
                             JSONArray arr1 = response.getJSONArray("mTanques");
+
+                            mTanques = new ArrayList<Tanque>();
 
                             for (int x = 0; x < arr1.length(); x++) {
                                 JSONObject object1 = arr1.getJSONObject(x);

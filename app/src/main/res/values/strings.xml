@@ -38,4 +38,5 @@
     <string name="lecturas">Lecturas</string>
     <string name="advertencia">Advertencia</string>
     <string name="finalizar">Finalizar</string>
+    <string name="porcentaje_nuevo">Porcentaje nuevo:</string>
 </resources>

@@ -7,6 +7,8 @@ import com.android.volley.Response;
 import com.google.gson.Gson;
 import com.grupozeta.sm.models.CuentaCliente;
 import com.grupozeta.sm.models.FileLecturasNuevas;
+import com.grupozeta.sm.models.FilePorcentajesNuevos;
+import com.grupozeta.sm.models.Tanque;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -35,20 +37,9 @@ public class Ficheros {
 
         try
         {
-            removeFile(context, idCuentaTanque);
+            removeFile(context, idCuentaTanque, numCalle);
         }catch (Exception ignored){}
 
-//NO SIRVE
-
-        /*
-        try
-        {
-            File root = new File("/tempLecturas/");
-            if (!root.exists()) {
-                root.mkdir();
-            }
-        }
-        catch (Exception e){}*/
 
         try
         {
@@ -58,10 +49,46 @@ public class Ficheros {
         }catch (Exception ignored){}
     }
 
-    public static void removeFile(Context context, String id)
+    public static void saveFile(Context context, ArrayList<Tanque> mTanques, String idCuentaTanque)
+    {
+        ArrayList<FilePorcentajesNuevos> mPorcentajesTemp = new ArrayList<FilePorcentajesNuevos>();
+
+        for(int x=0; x<mTanques.size(); x++)
+        {
+            if(mTanques.get(x).getPorcentaje_nuevo() != -1)
+            {
+                mPorcentajesTemp.add(new FilePorcentajesNuevos(mTanques.get(x).getId_tanque(), mTanques.get(x).getPorcentaje_nuevo()));
+            }
+        }
+
+        Gson gson = new Gson();
+        String json = gson.toJson(mPorcentajesTemp);
+
+        try
+        {
+            removeFilePorcentaje(context, idCuentaTanque);
+        }catch (Exception ignored){}
+
+        try
+        {
+            FileOutputStream conf = context.openFileOutput("TAN_" + idCuentaTanque + "_"+ (Calendar.getInstance().get(Calendar.MONTH)+1) + "_" + Calendar.getInstance().get(Calendar.YEAR), Context.MODE_PRIVATE);
+            conf.write(json.getBytes());
+            conf.close();
+        }catch (Exception ignored){}
+    }
+
+    public static void removeFile(Context context, String id, String numCalle)
     {
         try{
-            context.deleteFile("LEC_" + id + "_" + (Calendar.getInstance().get(Calendar.MONTH)+1) + "_" + Calendar.getInstance().get(Calendar.YEAR));
+            context.deleteFile("LEC_" + id + "_" + numCalle + "_" + (Calendar.getInstance().get(Calendar.MONTH)+1) + "_" + Calendar.getInstance().get(Calendar.YEAR));
+        }catch(Exception ignored){}
+    }
+
+
+    public static void removeFilePorcentaje(Context context, String id)
+    {
+        try{
+            context.deleteFile("TAN_" + id + "_" + (Calendar.getInstance().get(Calendar.MONTH)+1) + "_" + Calendar.getInstance().get(Calendar.YEAR));
         }catch(Exception ignored){}
     }
 
