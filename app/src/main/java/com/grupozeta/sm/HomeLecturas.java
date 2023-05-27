@@ -36,6 +36,8 @@ import com.grupozeta.sm.includes.Toolbar;
 import com.grupozeta.sm.models.Calle;
 import com.grupozeta.sm.models.CuentaCliente;
 import com.grupozeta.sm.models.CuentaTanque;
+import com.grupozeta.sm.models.FileLecturasNuevas;
+import com.grupozeta.sm.models.FilePorcentajesNuevos;
 import com.grupozeta.sm.models.Tanque;
 import com.grupozeta.sm.models.Usuario;
 
@@ -45,8 +47,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class HomeLecturas extends AppCompatActivity {
@@ -68,7 +72,7 @@ public class HomeLecturas extends AppCompatActivity {
     TextView tvFecha;
     RecyclerView rvCuentasTanque;
     CuentaTanqueListAdapter cuentaTanqueListAdapter;
-    ArrayList mTanques;
+    ArrayList<Tanque> mTanques;
     CardView cvPorcentajeTanque;
     CuentaTanque mCuentaTanques;
 
@@ -222,6 +226,7 @@ public class HomeLecturas extends AppCompatActivity {
                                mTanques.add(mTanque);
                             }
 
+                            leerFichero();
 /*
 
     TOMAR SOLO 1 VALOR
@@ -271,6 +276,46 @@ public class HomeLecturas extends AppCompatActivity {
         });
 
         mQueue.add(request);
+    }
+
+    private void leerFichero() {
+
+        JSONArray jsonArray = new JSONArray();
+
+        try {
+            FileInputStream read = openFileInput("TAN_" + mCuentaTanques.getIdCuenta() + "_" + (Calendar.getInstance().get(Calendar.MONTH)+1) + "_" + Calendar.getInstance().get(Calendar.YEAR));
+            int size = read.available();
+            byte[] buffer = new byte[size];
+            read.read(buffer);
+            read.close();
+            String json = new String(buffer);
+
+            jsonArray = new JSONArray(json);
+
+        } catch (Exception ignored) {}
+
+        ArrayList<FilePorcentajesNuevos> mTanquesTemp = new ArrayList<FilePorcentajesNuevos>();
+
+        try {
+            for(int i=0;i<jsonArray.length();i++) {
+                JSONObject object=jsonArray.getJSONObject(i);
+                mTanquesTemp.add(new FilePorcentajesNuevos(Integer.parseInt(object.getString("id_tanque")), Integer.parseInt(object.getString("porcentaje_nuevo"))));
+            }
+        }catch (Exception e){}
+
+
+        for(int x=0; x<mTanquesTemp.size();x++)
+        {
+            for(int y=0; y<mTanques.size();y++)
+            {
+                if(mTanques.get(y).getId_tanque() == mTanquesTemp.get(x).getId_tanque())
+                {
+                    mTanques.get(y).setPorcentaje_nuevo(mTanquesTemp.get(x).getPorcentaje_nuevo());
+                    break;
+                }
+            }
+        }
+
     }
 
     @SuppressLint("SetTextI18n")

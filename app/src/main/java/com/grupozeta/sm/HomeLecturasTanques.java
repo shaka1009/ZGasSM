@@ -19,11 +19,17 @@ import com.grupozeta.sm.includes.PopupLectura;
 import com.grupozeta.sm.includes.PopupTanque;
 import com.grupozeta.sm.includes.Toolbar;
 import com.grupozeta.sm.models.CuentaCliente;
+import com.grupozeta.sm.models.FilePorcentajesNuevos;
 import com.grupozeta.sm.models.Tanque;
 
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class HomeLecturasTanques extends AppCompatActivity {
 
@@ -100,6 +106,48 @@ public class HomeLecturasTanques extends AppCompatActivity {
         Bundle args = intent.getBundleExtra("BUNDLE");
         mTanques = (ArrayList<Tanque>) args.getSerializable("ARRAYLIST");
         idCuentaTanque = intent.getStringExtra("idCuentaTanque");
+
+        leerFichero();
+    }
+
+    private void leerFichero() {
+
+        JSONArray jsonArray = new JSONArray();
+
+        try {
+            FileInputStream read = openFileInput("TAN_" + idCuentaTanque + "_" + (Calendar.getInstance().get(Calendar.MONTH)+1) + "_" + Calendar.getInstance().get(Calendar.YEAR));
+            int size = read.available();
+            byte[] buffer = new byte[size];
+            read.read(buffer);
+            read.close();
+            String json = new String(buffer);
+
+            jsonArray = new JSONArray(json);
+
+        } catch (Exception ignored) {}
+
+        ArrayList<FilePorcentajesNuevos> mTanquesTemp = new ArrayList<FilePorcentajesNuevos>();
+
+        try {
+            for(int i=0;i<jsonArray.length();i++) {
+                JSONObject object=jsonArray.getJSONObject(i);
+                mTanquesTemp.add(new FilePorcentajesNuevos(Integer.parseInt(object.getString("id_tanque")), Integer.parseInt(object.getString("porcentaje_nuevo"))));
+            }
+        }catch (Exception e){}
+
+
+        for(int x=0; x<mTanquesTemp.size();x++)
+        {
+            for(int y=0; y<mTanques.size();y++)
+            {
+                if(mTanques.get(y).getId_tanque() == mTanquesTemp.get(x).getId_tanque())
+                {
+                    mTanques.get(y).setPorcentaje_nuevo(mTanquesTemp.get(x).getPorcentaje_nuevo());
+                    break;
+                }
+            }
+        }
+
     }
 
     @SuppressLint("RtlHardcoded")

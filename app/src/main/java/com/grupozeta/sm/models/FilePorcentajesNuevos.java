@@ -1,21 +1,23 @@
 package com.grupozeta.sm.models;
 
 public class FilePorcentajesNuevos {
-    int id_cliente;
+    int id_tanque;
     int porcentaje_nuevo;
 
-    public FilePorcentajesNuevos(int id_cliente, int porcentaje_nuevo) {
-        this.id_cliente = id_cliente;
+
+    public int getId_tanque() {
+        return id_tanque;
+    }
+
+    public void setId_tanque(int id_tanque) {
+        this.id_tanque = id_tanque;
+    }
+
+    public FilePorcentajesNuevos(int id_tanque, int porcentaje_nuevo) {
+        this.id_tanque = id_tanque;
         this.porcentaje_nuevo = porcentaje_nuevo;
     }
 
-    public int getId_cliente() {
-        return id_cliente;
-    }
-
-    public void setId_cliente(int id_cliente) {
-        this.id_cliente = id_cliente;
-    }
 
     public int getPorcentaje_nuevo() {
         return porcentaje_nuevo;
