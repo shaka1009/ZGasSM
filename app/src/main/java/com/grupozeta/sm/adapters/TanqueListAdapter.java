@@ -114,7 +114,7 @@ public class TanqueListAdapter extends RecyclerView.Adapter<TanqueListAdapter.Vi
 
             tvDescripcion.setText("Tanque #" + item.getDescripcion());
             tvCapacidad.setText("Capacidad: " + item.getCapacidad() + " Lts.");
-            tvPorcentajeActual.setText("Porcentaje anterior: " + item.getPorcentaje_actual() + "%");
+            tvPorcentajeActual.setText("Porcentaje ant. (cierre): " + item.getPorcentaje_actual() + "%");
 
             if(item.getPorcentaje_nuevo()!=-1)
             {

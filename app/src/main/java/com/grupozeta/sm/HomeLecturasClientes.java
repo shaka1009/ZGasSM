@@ -319,24 +319,16 @@ public class HomeLecturasClientes extends AppCompatActivity {
     new ActivityResultContracts.StartActivityForResult(),
     result -> {
         if (result.getResultCode() == Activity.RESULT_OK) {
-
-
-
             Intent intent = result.getData();
             Bundle args = intent.getBundleExtra("BUNDLE");
             mCuentasCliente = (ArrayList<CuentaCliente>) args.getSerializable("ARRAYLIST");
             imprimirDatos();
             cuentaClienteListAdapter.updateData();
-
-
-
-
             recarga_datos();
         }
     });
 
     private void recarga_datos() {
-
         Toast.makeText(this, "Datos actualizados.", Toast.LENGTH_SHORT).show();
     }
 
