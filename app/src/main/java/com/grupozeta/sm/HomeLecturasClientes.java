@@ -6,7 +6,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,45 +21,59 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.grupozeta.sm.adapters.CuentaClienteListAdapter;
-import com.grupozeta.sm.adapters.CuentaTanqueListAdapter;
 import com.grupozeta.sm.config.Opciones;
 import com.grupozeta.sm.includes.PopupError;
 import com.grupozeta.sm.includes.PopupLectura;
 import com.grupozeta.sm.includes.SnackbarError;
 import com.grupozeta.sm.includes.Toolbar;
-import com.grupozeta.sm.models.Calle;
 import com.grupozeta.sm.models.CuentaCliente;
-import com.grupozeta.sm.models.CuentaTanque;
-import com.grupozeta.sm.models.FileLecturasNuevas;
-import com.grupozeta.sm.models.Usuario;
+import com.grupozeta.sm.models.ClienteLecturas;
 
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
+
+import org.jboss.resteasy.client.jaxrs.ResteasyClient;
+import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
+import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.FileInputStream;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.HashMap;
+import java.util.Map;
+
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.client.Invocation;
+import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.MediaType;
+
 
 public class HomeLecturasClientes extends AppCompatActivity {
 
     ArrayList<CuentaCliente> mCuentasCliente;
 
     RequestQueue mQueue;
+    RequestQueue mQueue2;
+    JsonArrayRequest sendLecturas;
+    JSONArray jsonArray;
 
     RecyclerView rvCuentasCliente;
 
@@ -80,6 +93,8 @@ public class HomeLecturasClientes extends AppCompatActivity {
 
     Button btnFinalizar;
 
+    ArrayList<ClienteLecturas> sendClienteLecturas;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,9 +104,15 @@ public class HomeLecturasClientes extends AppCompatActivity {
         idCuentaTanque = getIntent().getStringExtra("idCuentaTanque");
         numCalle = getIntent().getStringExtra("numCalle");
 
+        //idCuentaTanque = "1902448";
+        //numCalle = "80319";
+
         declaraciones();
         escuchadores();
         webService(idCuentaTanque, numCalle);
+
+
+
     }
 
     private void escuchadores() {
@@ -182,23 +203,127 @@ public class HomeLecturasClientes extends AppCompatActivity {
         btnFinalizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String urlSendLecturas = Home.API_LINK + "Lecturas/Insertar/" + idCuentaTanque;
+                sendClienteLecturas = new ArrayList<ClienteLecturas>();
+                Gson gson = new Gson();
+                String json = new String();
+
+                //Valida que todos los datos estén capturados.
                 for(int x=0; x<mCuentasCliente.size();x++)
                 {
                     if(mCuentasCliente.get(x).getLectura_nueva()==-1)
                     {
-                        Toast.makeText(HomeLecturasClientes.this, "Faltan datos por capturar.", Toast.LENGTH_SHORT).show();
-                        return;
+                        //Toast.makeText(HomeLecturasClientes.this, "Faltan datos por capturar.", Toast.LENGTH_SHORT).show();
+                        //return;
                     }
+                    else
+                        sendClienteLecturas.add(new ClienteLecturas(mCuentasCliente.get(x).getId_cliente(),mCuentasCliente.get(x).getLectura_nueva()));
                 }
+
+                try {
+                    jsonArray = new JSONArray(gson.toJson(sendClienteLecturas));
+                    json = gson.toJson(sendClienteLecturas);
+                    System.out.println("DEPURACION - JSONARRAY" + jsonArray);
+                    System.out.println("DEPURACION - JSONSTRING" + json);
+                } catch (JSONException e) {
+                    Toast.makeText(HomeLecturasClientes.this, "Error al enviar lecturas.", Toast.LENGTH_SHORT).show();
+                }
+                
+                webServiceInsertar(urlSendLecturas, json, jsonArray);
+                
             }
         });
     }
+/*
+    private void webServiceInsertar(String urlSendLecturas, String json) {
 
+        //URL http://10.21.115.10:8080/ApiSM/Lecturas/Insertar
+
+        // user object that we need to send
+        JSONObject userJson = new JSONObject();
+        // body of the request
+        JSONObject body = new JSONObject();
+
+        try {
+            // Put user attributes in a JSONObject
+            userJson.put("id_cliente", 1858274);
+            userJson.put("lectura_nueva", 20);
+            // Put user JSONObject inside of another JSONObject which will be the body of the request
+            body.put("user", userJson);
+
+
+            System.out.println("Object: " + userJson);
+            System.out.println("Body: " + body);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST,
+                urlSendLecturas,
+                userJson,
+                response -> {
+                    // Handle response
+
+                }, e -> {
+            // handle error
+        }
+
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Content-Type","application/json");
+                return params;
+            }
+        };
+
+        mQueue2.add(jsonObjectRequest);
+    }
+*/
+
+    private void webServiceInsertar(String urlSendLecturas, String json, JSONArray jsonArray) {
+
+        //URL http://10.21.115.10:8080/ApiSM/Lecturas/Insertar
+
+        // body of the request
+        JSONObject body = new JSONObject();
+
+        try {
+            // Put user attributes in a JSONObject
+            System.out.println("jsonArray: " + jsonArray);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(
+                Request.Method.POST,
+                urlSendLecturas,
+                jsonArray,
+                response -> {
+                    // Handle response
+
+                }, e -> {
+            // handle error
+        }
+
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Content-Type","application/json");
+                return params;
+            }
+        };
+
+        mQueue2.add(jsonObjectRequest);
+    }
 
 
     private void declaraciones() {
         mCuentasCliente = new ArrayList<CuentaCliente>();
         mQueue = Volley.newRequestQueue(this);
+        mQueue2 = Volley.newRequestQueue(this);
 
         rvCuentasCliente = findViewById(R.id.rvCuentasCliente);
 
@@ -220,7 +345,7 @@ public class HomeLecturasClientes extends AppCompatActivity {
     private void webService(String idCuentaTanque, String numCalle) {
         String url = Home.API_LINK + "Lecturas/CuentaCliente/" + idCuentaTanque + "/" + numCalle;
 
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, jsonArray, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 try {
@@ -234,6 +359,7 @@ public class HomeLecturasClientes extends AppCompatActivity {
                     getMenuInflater().inflate(R.menu.menu_toolbar_captura_rapida, menu); //MOSTRAR
 
                     imprimirDatos();
+
                 }catch (Exception e)
                 {
                     runOnUiThread(() -> {
@@ -249,6 +375,10 @@ public class HomeLecturasClientes extends AppCompatActivity {
                 });
             }
         });
+
+
+
+
 
         mQueue.add(request);
 
@@ -270,12 +400,12 @@ public class HomeLecturasClientes extends AppCompatActivity {
 
         } catch (Exception ignored) {}
 
-        ArrayList<FileLecturasNuevas> mCuentasClienteTemp = new ArrayList<FileLecturasNuevas>();
+        ArrayList<ClienteLecturas> mCuentasClienteTemp = new ArrayList<ClienteLecturas>();
 
         try {
             for(int i=0;i<jsonArray.length();i++) {
                 JSONObject object=jsonArray.getJSONObject(i);
-                mCuentasClienteTemp.add(new FileLecturasNuevas(Integer.parseInt(object.getString("id_cliente")), Integer.parseInt(object.getString("lectura_nueva"))));
+                mCuentasClienteTemp.add(new ClienteLecturas(Integer.parseInt(object.getString("id_cliente")), Integer.parseInt(object.getString("lectura_nueva"))));
             }
         }catch (Exception e){}
 

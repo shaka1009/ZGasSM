@@ -24,7 +24,7 @@ import com.grupozeta.sm.models.Usuario;
 
 public class Home extends AppCompatActivity {
 
-    final public static String API_LINK = "http://10.21.115.10:8080/ApiSM/api/";
+    final public static String API_LINK = "http://10.21.115.10:8080/ApiSM/";
 
     public static Usuario mUsuario;
 
@@ -54,7 +54,8 @@ public class Home extends AppCompatActivity {
         escuchadores();
         listenner_drawer();
 
-
+        //startActivity(new Intent(Home.this , HomeLecturas.class));
+        //finish();
     }
 
     private void escuchadores() {
@@ -109,7 +110,13 @@ public class Home extends AppCompatActivity {
         mPopupCerrarSesion = new PopupCerrarSesion(this, getApplicationContext(), findViewById(R.id.popupError));
 
         tvSaludo = findViewById(R.id.tvSaludo);
-        tvSaludo.setText(mUsuario.getNombreCompleto());
+        try {
+            tvSaludo.setText(mUsuario.getNombreCompleto());
+        }catch(Exception e)
+        {
+
+        }
+
 
         cvLecturas = findViewById(R.id.cvLecturas);
 
@@ -188,6 +195,7 @@ public class Home extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         this.moveTaskToBack(true); //Minimizar
     }
 }

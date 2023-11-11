@@ -47,6 +47,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/open_sans"
                     android:hint="Ingresa cuenta tanque."
+
                     android:layout_gravity="center"
                     android:inputType="number"
                     android:maxLength="6"

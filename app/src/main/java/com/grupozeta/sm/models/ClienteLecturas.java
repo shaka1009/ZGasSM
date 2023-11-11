@@ -1,6 +1,6 @@
 package com.grupozeta.sm.models;
 
-public class FileLecturasNuevas {
+public class ClienteLecturas {
     int id_cliente;
     int lectura_nueva;
 
@@ -12,7 +12,7 @@ public class FileLecturasNuevas {
         return lectura_nueva;
     }
 
-    public FileLecturasNuevas(int id_cliente, int lectura_nueva) {
+    public ClienteLecturas(int id_cliente, int lectura_nueva) {
         this.id_cliente = id_cliente;
         this.lectura_nueva = lectura_nueva;
     }

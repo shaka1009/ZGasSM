@@ -1,6 +1,5 @@
 package com.grupozeta.sm;
 
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -18,10 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,12 +31,9 @@ import com.grupozeta.sm.includes.PopupError;
 import com.grupozeta.sm.includes.SnackbarError;
 import com.grupozeta.sm.includes.Toolbar;
 import com.grupozeta.sm.models.Calle;
-import com.grupozeta.sm.models.CuentaCliente;
 import com.grupozeta.sm.models.CuentaTanque;
-import com.grupozeta.sm.models.FileLecturasNuevas;
 import com.grupozeta.sm.models.FilePorcentajesNuevos;
 import com.grupozeta.sm.models.Tanque;
-import com.grupozeta.sm.models.Usuario;
 
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
@@ -51,7 +45,6 @@ import java.io.FileInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class HomeLecturas extends AppCompatActivity {
 
