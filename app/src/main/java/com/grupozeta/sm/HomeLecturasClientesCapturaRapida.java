@@ -211,7 +211,6 @@ public class HomeLecturasClientesCapturaRapida extends AppCompatActivity {
             }
             else
             {
-                Toast.makeText(HomeLecturasClientesCapturaRapida.this, "FIN DEL TIMER.", Toast.LENGTH_SHORT).show();
                 mHandler.removeCallbacks(mRunnable);
                 sendDatos();
                 finish();

@@ -13,6 +13,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -94,6 +96,11 @@ public class HomeLecturasClientes extends AppCompatActivity {
     Button btnFinalizar;
 
     ArrayList<ClienteLecturas> sendClienteLecturas;
+
+    private LottieAnimationView success;
+
+    private Handler mHandler = new Handler();
+    int mTimeLimit = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -301,10 +308,36 @@ public class HomeLecturasClientes extends AppCompatActivity {
                 urlSendLecturas,
                 jsonArray,
                 response -> {
+
+                    try {
+                        for(int i=0;i<response.length();i++) {
+                            JSONObject object=response.getJSONObject(i);
+
+                            if(object.getString("status").equals("sucess"))
+                            {
+                                ocultar(null);
+
+                                svCuentaCliente.setVisibility(View.GONE);
+
+                                success.setVisibility(View.VISIBLE);
+                                success.playAnimation();
+                                mHandler.postDelayed(mRunnable, 1000);
+
+
+                            }
+
+                        }
+                    }catch(Exception e)
+                    {
+
+                    }
+
+
+
                     // Handle response
 
                 }, e -> {
-            // handle error
+            System.out.println("DEPURACION error respuesta: " + e);
         }
 
         ){
@@ -318,6 +351,21 @@ public class HomeLecturasClientes extends AppCompatActivity {
 
         mQueue2.add(jsonObjectRequest);
     }
+
+    Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (mTimeLimit < 5) { // SEGUNDOS
+                mTimeLimit++;
+                mHandler.postDelayed(mRunnable, 1000);
+            }
+            else
+            {
+                mHandler.removeCallbacks(mRunnable);
+                finish();
+            }
+        }
+    };
 
 
     private void declaraciones() {
@@ -340,6 +388,8 @@ public class HomeLecturasClientes extends AppCompatActivity {
         mPopupError = new PopupError(this, getApplicationContext(), findViewById(R.id.popupError));
 
         btnFinalizar = findViewById(R.id.btnFinalizar);
+
+        success = findViewById(R.id.success);
     }
 
     private void webService(String idCuentaTanque, String numCalle) {
@@ -382,6 +432,14 @@ public class HomeLecturasClientes extends AppCompatActivity {
 
         mQueue.add(request);
 
+    }
+
+    public void ocultar(View v) {
+        getSupportActionBar().hide();
+    }
+
+    public void mostrar(View v) {
+        getSupportActionBar().show();
     }
 
     private void leerFichero() {
